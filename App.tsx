@@ -46,9 +46,8 @@ import {
   HelpCircle,
   BookOpen
 } from 'lucide-react';
-// GitHub এ সহজে আপলোডের জন্য সব ফাইল একই ফোল্ডারে থাকবে ধরে পাথ আপডেট করা হলো
-import { storage } from './storage';
-import { Transaction, Loan, StorageData, TransactionType, LoanType, ThemeColor, Category, MonthlyNote, LoanStatus, LoanPayment } from './types';
+import { storage } from './storage.ts';
+import { Transaction, Loan, StorageData, TransactionType, LoanType, ThemeColor, Category, MonthlyNote, LoanStatus, LoanPayment } from './types.ts';
 import { 
   BarChart, 
   Bar, 
@@ -757,7 +756,7 @@ function HistoryView({ t, lang, transactions, loans, onDelete, onEdit, theme, on
         {[
           { id: 'all', label: lang === 'bn' ? 'সব' : 'All' },
           { id: 'income', label: lang === 'bn' ? 'আয়' : 'Income' },
-          { id: 'expense', label: lang === 'bn' ? 'ব্যয়' : 'Expense' },
+          { id: 'expense', label: lang === 'bn' ? 'ব্যয়' : 'Expense' },
           { id: 'taken', label: lang === 'bn' ? 'ঋণ গ্রহণ' : 'Taken' },
           { id: 'given', label: lang === 'bn' ? 'ঋণ প্রদান' : 'Given' },
           { id: 'settled', label: t('settledFilter') }
@@ -799,7 +798,7 @@ function HistoryView({ t, lang, transactions, loans, onDelete, onEdit, theme, on
                       </div>
                     )}
                     <button onClick={() => onEdit(item)} className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl"><Edit2 size={16} /></button>
-                    <button onClick={() => onDelete(item.id, !!item.isLoan)} className="text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors p-2 bg-rose-50 dark:bg-blue-900/20 rounded-xl"><Trash2 size={16} /></button>
+                    <button onClick={() => onDelete(item.id, !!item.isLoan)} className="text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors p-2 bg-blue-900/20 rounded-xl"><Trash2 size={16} /></button>
                   </div>
                 </div>
               </div>
