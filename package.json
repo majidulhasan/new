@@ -1,5 +1,5 @@
 {
-  "name": "আমার-খাতা-(amar-khata)",
+  "name": "আমার-খাতা---ব্যক্তিগত-হিসাব-(amar-khata)",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "lucide-react": "^0.563.0",
     "recharts": "^3.7.0",
-    "react-dom": "^19.2.4"
+    "path": "^0.12.7",
+    "vite": "^7.3.1",
+    "@vitejs/plugin-react": "^5.1.2"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   LayoutDashboard, 
@@ -46,8 +45,9 @@ import {
   HelpCircle,
   BookOpen
 } from 'lucide-react';
-import { storage } from './storage.ts';
-import { Transaction, Loan, StorageData, TransactionType, LoanType, ThemeColor, Category, MonthlyNote, LoanStatus, LoanPayment } from './types.ts';
+import { storage } from './services/storage';
+import { Transaction, Loan, StorageData, TransactionType, LoanType, ThemeColor, Category, MonthlyNote, LoanStatus, LoanPayment } from './types';
+import { LOAN_STATUS_LABELS } from './constants';
 import { 
   BarChart, 
   Bar, 
@@ -756,7 +756,7 @@ function HistoryView({ t, lang, transactions, loans, onDelete, onEdit, theme, on
         {[
           { id: 'all', label: lang === 'bn' ? 'সব' : 'All' },
           { id: 'income', label: lang === 'bn' ? 'আয়' : 'Income' },
-          { id: 'expense', label: lang === 'bn' ? 'ব্যয়' : 'Expense' },
+          { id: 'expense', label: lang === 'bn' ? 'ব্যয়' : 'Expense' },
           { id: 'taken', label: lang === 'bn' ? 'ঋণ গ্রহণ' : 'Taken' },
           { id: 'given', label: lang === 'bn' ? 'ঋণ প্রদান' : 'Given' },
           { id: 'settled', label: t('settledFilter') }
@@ -798,7 +798,7 @@ function HistoryView({ t, lang, transactions, loans, onDelete, onEdit, theme, on
                       </div>
                     )}
                     <button onClick={() => onEdit(item)} className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl"><Edit2 size={16} /></button>
-                    <button onClick={() => onDelete(item.id, !!item.isLoan)} className="text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors p-2 bg-blue-900/20 rounded-xl"><Trash2 size={16} /></button>
+                    <button onClick={() => onDelete(item.id, !!item.isLoan)} className="text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors p-2 bg-rose-50 dark:bg-blue-900/20 rounded-xl"><Trash2 size={16} /></button>
                   </div>
                 </div>
               </div>
@@ -1519,7 +1519,7 @@ function DeleteConfirmModal({ t, onClose, onConfirm }: any) {
   return (
     <div className="fixed inset-0 z-[160] flex items-center justify-center p-6 animate-in fade-in duration-200">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative bg-white dark:bg-gray-800 w-full max-sm:w-[95%] max-w-sm rounded-[2.5rem] p-8 shadow-2xl animate-in zoom-in-95 duration-200 text-center">
+      <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl animate-in zoom-in-95 duration-200 text-center">
         <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/30 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
           <Trash2 size={40} />
         </div>
@@ -1540,7 +1540,7 @@ function SettleConfirmModal({ t, lang, loan, onClose, onConfirm }: any) {
   return (
     <div className="fixed inset-0 z-[160] flex items-center justify-center p-6 animate-in fade-in duration-200">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative bg-white dark:bg-gray-800 w-full max-sm:w-[95%] max-w-sm rounded-[2.5rem] p-8 shadow-2xl animate-in zoom-in-95 duration-200 text-center">
+      <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl animate-in zoom-in-95 duration-200 text-center">
         <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle size={40} />
         </div>
