@@ -17,14 +17,15 @@ const DEFAULT_DATA: StorageData = {
     loans: [],
     notes: [],
     categories: [
-      { id: '1', label: 'বেতন (Salary)', type: 'INCOME' },
-      { id: '2', label: 'উপহার (Gift)', type: 'INCOME' },
-      { id: '3', label: 'খাবার (Food)', type: 'EXPENSE' },
-      { id: '4', label: 'বাজার (Grocery)', type: 'EXPENSE' },
-      { id: '5', label: 'ভাড়া (Rent)', type: 'EXPENSE' },
-      { id: '6', label: 'যাতায়াত (Transport)', type: 'EXPENSE' },
-      { id: '7', label: 'চিকিৎসা (Medical)', type: 'EXPENSE' },
-      { id: '8', label: 'শিক্ষা (Education)', type: 'EXPENSE' },
+      { id: '1', label: 'বেতন', type: 'INCOME' },
+      { id: '2', label: 'উপহার', type: 'INCOME' },
+      { id: '2', label: 'উপহার', type: 'INCOME' },
+      { id: '3', label: 'খাবার', type: 'EXPENSE' },
+      { id: '4', label: 'বাজার', type: 'EXPENSE' },
+      { id: '5', label: 'ভাড়া', type: 'EXPENSE' },
+      { id: '6', label: 'যাতায়াত', type: 'EXPENSE' },
+      { id: '7', label: 'চিকিৎসা', type: 'EXPENSE' },
+      { id: '8', label: 'শিক্ষা', type: 'EXPENSE' },
     ],
   }
 };
