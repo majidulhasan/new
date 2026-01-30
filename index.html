@@ -58,8 +58,8 @@
     "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
     "recharts": "https://esm.sh/recharts@^3.7.0",
     "path": "https://esm.sh/path@^0.12.7",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
     "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
     "url": "https://esm.sh/url@^0.11.4"
   }
 }
@@ -72,20 +72,26 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js', { scope: './' })
+                // 'new URL' ব্যবহার না করে সরাসরি পাথে রেজিস্ট্রেশন করা হচ্ছে
+                navigator.serviceWorker.register('sw.js')
                     .then(reg => {
-                        console.log('SW Registered with scope:', reg.scope);
-                        // যখনই নতুন আপডেট আসবে অটোমেটিক রিলোড হবে
+                        console.log('ServiceWorker Registered successfully');
                         reg.onupdatefound = () => {
                             const installingWorker = reg.installing;
                             installingWorker.onstatechange = () => {
                                 if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    window.location.reload();
+                                    console.log('New content is available; please refresh.');
+                                    // আপনি চাইলে এখানে একটি ইউজার প্রম্পট দেখাতে পারেন
                                 }
                             };
                         };
                     })
-                    .catch(err => console.error('SW Registration failed:', err));
+                    .catch(err => {
+                        // স্যান্ডবক্স বা লোকালহোস্ট ছাড়া অন্য জায়গায় এরর হ্যান্ডলিং
+                        if (location.protocol === 'https:' || location.hostname === 'localhost') {
+                            console.error('SW Registration failed:', err);
+                        }
+                    });
             });
         }
     </script>

@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'amar-khata-v2';
+const CACHE_NAME = 'amar-khata-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,50 +8,46 @@ const ASSETS_TO_CACHE = [
   'https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap'
 ];
 
-// ইনস্টল করার সময় বেসিক ফাইলগুলো ক্যাশ করবে
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
 });
 
-// ক্যাশ কন্ট্রোল করার জন্য অ্যাক্টিভেশন
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))
-      );
-    })
+    caches.keys().then((keys) => Promise.all(
+      keys.map((key) => {
+        if (key !== CACHE_NAME) return caches.delete(key);
+      })
+    ))
   );
   self.clients.claim();
 });
 
-// মেইন অফলাইন লজিক: ক্যাশ থেকে ফাইল দিবে, না থাকলে নেট থেকে এনে ক্যাশ করবে
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then((networkResponse) => {
-        // নতুন যেকোনো ফাইল (যেমন: esm.sh থেকে আসা লাইব্রেরি) ক্যাশে জমা করবে
-        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic' || event.request.url.includes('esm.sh')) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      }).catch(() => {
-        // যদি ইন্টারনেট না থাকে এবং ক্যাশেও না থাকে, তাহলে index.html দিবে
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
+    caches.match(event.request).then((cached) => {
+      const networked = fetch(event.request)
+        .then((response) => {
+          // যদি নেটওয়ার্ক থেকে ফাইল পাওয়া যায়, সেটি ক্যাশে আপডেট করি (ভবিষ্যতের জন্য)
+          if (response.ok || (response.type === 'opaque' && event.request.url.includes('esm.sh'))) {
+            const cacheCopy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, cacheCopy);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // নেট না থাকলে ক্যাশ থেকে দিবে, ক্যাশেও না থাকলে index.html দিবে
+          return cached || caches.match('./index.html');
+        });
+
+      return cached || networked;
     })
   );
 });
