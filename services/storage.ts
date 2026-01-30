@@ -18,14 +18,15 @@ const DEFAULT_DATA: StorageData = {
     notes: [],
     categories: [
       { id: '1', label: 'বেতন', type: 'INCOME' },
-      { id: '2', label: 'উপহার', type: 'INCOME' },
-      { id: '2', label: 'উপহার', type: 'INCOME' },
-      { id: '3', label: 'খাবার', type: 'EXPENSE' },
-      { id: '4', label: 'বাজার', type: 'EXPENSE' },
-      { id: '5', label: 'ভাড়া', type: 'EXPENSE' },
-      { id: '6', label: 'যাতায়াত', type: 'EXPENSE' },
-      { id: '7', label: 'চিকিৎসা', type: 'EXPENSE' },
-      { id: '8', label: 'শিক্ষা', type: 'EXPENSE' },
+      { id: '2', label: 'বোনাস, type: 'INCOME' },
+      { id: '3', label: 'উপহার', type: 'INCOME' },
+      { id: '4', label: 'খাবার', type: 'EXPENSE' },
+      { id: '5', label: 'বাজার', type: 'EXPENSE' },
+      { id: '6', label: 'ভাড়া', type: 'EXPENSE' },
+      { id: '7', label: 'যাতায়াত', type: 'EXPENSE' },
+      { id: '8', label: 'চিকিৎসা', type: 'EXPENSE' },
+      { id: '9', label: 'শিক্ষা', type: 'EXPENSE' },
+      { id: '10', label: 'অন্যান্য', type: 'EXPENSE' },
     ],
   }
 };
